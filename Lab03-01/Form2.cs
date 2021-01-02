@@ -55,32 +55,20 @@ namespace Lab03_01
                 {
                     throw new Exception("Vui lòng nhập đầy đủ thông tin");
                 }
-                int total = Convert.ToInt32(txtTotalProfressor.Text);
-                int id = Convert.ToInt32(txtID.Text);
-                Faculty f = new Faculty() { FacultyID = id, FacultyName = txtName.Text, TotalProfessor = total };
-                context.Faculties.Add(f);
-                context.SaveChanges();
-                LoadGrid();
-                MessageBox.Show("Thêm thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ResetValue();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (txtID.Text == "" || txtName.Text == "" || txtTotalProfressor.Text == "")
-                {
-                    throw new Exception("Vui lòng nhập đầy đủ thông tin");
-                }
                 int falID = Convert.ToInt32(txtID.Text);
+                int total = Convert.ToInt32(txtTotalProfressor.Text);
                 Faculty falEdit = context.Faculties.FirstOrDefault(p => p.FacultyID == falID);
-                if (falEdit != null)
+                if (falEdit == null)
+                {
+                    Faculty f = new Faculty() { FacultyID = falID, FacultyName = txtName.Text, TotalProfessor = total };
+                    context.Faculties.Add(f);
+                    context.SaveChanges();
+                    LoadGrid();
+                    MessageBox.Show("Thêm thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ResetValue();
+                }
+                else
                 {
                     falEdit.FacultyID = Convert.ToInt32(txtID.Text);
                     falEdit.FacultyName = txtName.Text;
@@ -90,10 +78,7 @@ namespace Lab03_01
                     MessageBox.Show("Sửa thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ResetValue();
                 }
-                else
-                {
-                    throw new Exception("Không tìm thấy khoa có mã số này để sửa");
-                }
+                
             }
             catch (Exception ex)
             {
