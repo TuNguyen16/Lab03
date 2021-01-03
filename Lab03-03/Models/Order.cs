@@ -23,9 +23,6 @@ namespace Lab03_03.Models
         [StringLength(20)]
         public string ProductID { get; set; }
 
-        [StringLength(20)]
-        public string Unit { get; set; }
-
         public decimal Price { get; set; }
 
         public int Quantity { get; set; }
