@@ -22,19 +22,14 @@ namespace Lab03_03
         }
         private void LoadGrid()
         {
-            var month = new SqlParameter("@month", 12);
-            var year = new SqlParameter("@year", 2020);
-            
-            List<SqlParameter> para = new List<SqlParameter>();
-            para.Add(month);
-            para.Add(year);
-
-            list = context.Database.SqlQuery<Order>("ShowListByDeliveryDate @month,@year", para).ToList();
+            list = context.Orders.ToList();
+            decimal total = 0;
 
             dgvOrderList.Rows.Clear();
             foreach (Order o in list)
             {
-                if ((o.Invoice.DeliveryDate.Month <= dtpEnd.Value.Month) && (o.Invoice.DeliveryDate.Month >= dtpEnd.Value.Month))
+                DateTime idate = o.Invoice.DeliveryDate.Date;
+                if(DateTime.Compare(dtpStart.Value.Date,idate) <= 0 && DateTime.Compare(dtpEnd.Value.Date,idate) >= 0)
                 {
                     int index = dgvOrderList.Rows.Add();
                     dgvOrderList.Rows[index].Cells[0].Value = index + 1;
@@ -43,7 +38,6 @@ namespace Lab03_03
                     dgvOrderList.Rows[index].Cells[3].Value = o.Invoice.DeliveryDate;
                     dgvOrderList.Rows[index].Cells[4].Value = o.Price;
 
-                    decimal total = 0;
                     total += o.Price;
                     txtTotal.Text = total.ToString();
                 }
@@ -67,9 +61,13 @@ namespace Lab03_03
                 dt = Convert.ToDateTime(year +"/" + month + "/" + lastday);
                 dtpEnd.Value = dt;
 
+                dtpStart.Enabled = false;
+                dtpEnd.Enabled = false;
             }
             else
             {
+                dtpStart.Enabled = true;
+                dtpEnd.Enabled = true;
                 dtpStart.Value = dtpEnd.Value = DateTime.Now;
             }
         }
@@ -87,12 +85,36 @@ namespace Lab03_03
 
         private void dtpStart_ValueChanged(object sender, EventArgs e)
         {
-            LoadGrid();
+            try
+            {
+                if (DateTime.Compare(dtpStart.Value, dtpEnd.Value) > 0)
+                {
+                    dtpStart.Value = dtpEnd.Value;
+                    throw new Exception("Ngày bắt đầu không được lớn hơn ngày kết thúc");
+                }
+                LoadGrid();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void dtpEnd_ValueChanged(object sender, EventArgs e)
         {
-            LoadGrid();
+            try
+            {
+                if (DateTime.Compare(dtpStart.Value, dtpEnd.Value) > 0)
+                {
+                    dtpEnd.Value = dtpStart.Value;
+                    throw new Exception("Ngày kết thúc không được nhỏ hơn ngày bắt đầu");
+                }
+                LoadGrid();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
