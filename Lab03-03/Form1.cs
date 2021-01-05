@@ -52,8 +52,16 @@ namespace Lab03_03
                 //{
 
                 //}
-                int month = DateTime.Now.Month;
-                int year = DateTime.Now.Year;
+
+                //============TRƯỜNG HỢP DÙNG THÁNG HIỆN TẠI CỦA HỆ THỐNG====================
+                //int month = DateTime.Now.Month;
+                //int year = DateTime.Now.Year;
+
+                //============TRƯỜNG HỢP DÙNG THÁNG TRONG DATE TIME PICKER====================
+                int month = dtpStart.Value.Month;
+                int year = dtpStart.Value.Year;
+
+
                 DateTime dt = Convert.ToDateTime(year + "/" + month + "/1");
                 dtpStart.Value = dt;
 
