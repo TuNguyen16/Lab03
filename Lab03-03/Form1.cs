@@ -16,7 +16,6 @@ namespace Lab03_03
     {
         ProductContextDB context = new ProductContextDB();
         List<Order> list;
-        DataTable dt = new DataTable();
         public frmInfo()
         {
             InitializeComponent();
@@ -26,34 +25,23 @@ namespace Lab03_03
             list = context.Orders.ToList();
             decimal total = 0;
 
+            dgvOrderList.Rows.Clear();
             foreach (Order o in list)
             {
                 DateTime idate = o.Invoice.DeliveryDate.Date;
-                if (DateTime.Compare(dtpStart.Value.Date, idate) <= 0 && DateTime.Compare(dtpEnd.Value.Date, idate) >= 0)
+                if(DateTime.Compare(dtpStart.Value.Date,idate) <= 0 && DateTime.Compare(dtpEnd.Value.Date,idate) >= 0)
                 {
-                    DataRow find = dt.Rows.Find(o.InvoiceNo);
-                    if (find == null)
-                    {
-                        DataRow row = dt.NewRow();
-                        row["No"] = o.No;
-                        row["Iid"] = o.InvoiceNo;
-                        row["Od"] = o.Invoice.OrderDate;
-                        row["Dd"] = o.Invoice.DeliveryDate;
-                        row["Total"] = o.Quantity * o.Price;
-                        dt.Rows.Add(row);
-                        total += o.Quantity* o.Price;
-                    }
-                    else
-                    {
-                        decimal totalMoney = Convert.ToDecimal(find["Total"]);
-                        totalMoney += o.Quantity * o.Price;
-                        find["Total"] = totalMoney;
-                        total += o.Quantity * o.Price;
-                    }
+                    int index = dgvOrderList.Rows.Add();
+                    dgvOrderList.Rows[index].Cells[0].Value = index + 1;
+                    dgvOrderList.Rows[index].Cells[1].Value = o.InvoiceNo;
+                    dgvOrderList.Rows[index].Cells[2].Value = o.Invoice.OrderDate;
+                    dgvOrderList.Rows[index].Cells[3].Value = o.Invoice.DeliveryDate;
+                    dgvOrderList.Rows[index].Cells[4].Value = o.Price;
+
+                    total += o.Price;
+                    txtTotal.Text = total.ToString();
                 }
             }
-            dgvOrderList.DataSource = dt;
-            txtTotal.Text = total.ToString();
         }
         private void UpdateDate()
         {
@@ -66,12 +54,12 @@ namespace Lab03_03
                 //}
 
                 //============TRƯỜNG HỢP DÙNG THÁNG HIỆN TẠI CỦA HỆ THỐNG====================
-                int month = DateTime.Now.Month;
-                int year = DateTime.Now.Year;
+                //int month = DateTime.Now.Month;
+                //int year = DateTime.Now.Year;
 
                 //============TRƯỜNG HỢP DÙNG THÁNG TRONG DATE TIME PICKER====================
-                //int month = dtpStart.Value.Month;
-                //int year = dtpStart.Value.Year;
+                int month = dtpStart.Value.Month;
+                int year = dtpStart.Value.Year;
 
 
                 DateTime dt = Convert.ToDateTime(year + "/" + month + "/1");
@@ -95,24 +83,6 @@ namespace Lab03_03
         {
             txtTotal.Text = 0.ToString();
             //cbShowAll.Checked = true;
-
-            DataColumn temp = dt.Columns.Add("No");
-            temp.ColumnName = "STT";
-            temp.AutoIncrement = true;
-            temp.AutoIncrementSeed = 1;
-            temp.AutoIncrementStep = 1;
-            DataColumn temp2 = dt.Columns.Add("Iid");
-            temp2.ColumnName = "Số HĐ";
-            DataColumn temp3 = dt.Columns.Add("Od");
-            temp3.ColumnName = "Ngày đặt hàng";
-            DataColumn temp4 = dt.Columns.Add("Dd");
-            temp4.ColumnName = "Ngày giao hàng";
-            DataColumn temp5 = dt.Columns.Add("Total");
-            temp5.ColumnName = "Thành tiền";
-
-            DataColumn[] pk = { temp2 };
-            dt.PrimaryKey = pk;
-
             LoadGrid();
         }
 

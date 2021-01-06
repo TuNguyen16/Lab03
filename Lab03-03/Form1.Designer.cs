@@ -35,6 +35,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvOrderList = new System.Windows.Forms.DataGridView();
+            this.STT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.order = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.delivery = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.totalMoney = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
@@ -105,14 +110,47 @@
             // 
             // dgvOrderList
             // 
-            this.dgvOrderList.AllowUserToAddRows = false;
-            this.dgvOrderList.AllowUserToDeleteRows = false;
             this.dgvOrderList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOrderList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.STT,
+            this.hd,
+            this.order,
+            this.delivery,
+            this.totalMoney});
             this.dgvOrderList.Location = new System.Drawing.Point(17, 98);
             this.dgvOrderList.Name = "dgvOrderList";
-            this.dgvOrderList.ReadOnly = true;
             this.dgvOrderList.Size = new System.Drawing.Size(754, 207);
             this.dgvOrderList.TabIndex = 6;
+            // 
+            // STT
+            // 
+            this.STT.HeaderText = "STT";
+            this.STT.Name = "STT";
+            this.STT.Width = 40;
+            // 
+            // hd
+            // 
+            this.hd.HeaderText = "Số HĐ";
+            this.hd.Name = "hd";
+            this.hd.Width = 200;
+            // 
+            // order
+            // 
+            this.order.HeaderText = "Ngày đặt hàng";
+            this.order.Name = "order";
+            this.order.Width = 120;
+            // 
+            // delivery
+            // 
+            this.delivery.HeaderText = "Ngày giao hàng";
+            this.delivery.Name = "delivery";
+            this.delivery.Width = 120;
+            // 
+            // totalMoney
+            // 
+            this.totalMoney.HeaderText = "Thành tiền";
+            this.totalMoney.Name = "totalMoney";
+            this.totalMoney.Width = 150;
             // 
             // label3
             // 
@@ -163,6 +201,11 @@
         private System.Windows.Forms.DataGridView dgvOrderList;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtTotal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn STT;
+        private System.Windows.Forms.DataGridViewTextBoxColumn hd;
+        private System.Windows.Forms.DataGridViewTextBoxColumn order;
+        private System.Windows.Forms.DataGridViewTextBoxColumn delivery;
+        private System.Windows.Forms.DataGridViewTextBoxColumn totalMoney;
     }
 }
 
