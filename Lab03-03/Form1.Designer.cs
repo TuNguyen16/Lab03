@@ -110,6 +110,8 @@
             // 
             // dgvOrderList
             // 
+            this.dgvOrderList.AllowUserToAddRows = false;
+            this.dgvOrderList.AllowUserToDeleteRows = false;
             this.dgvOrderList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOrderList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.STT,
@@ -119,6 +121,7 @@
             this.totalMoney});
             this.dgvOrderList.Location = new System.Drawing.Point(17, 98);
             this.dgvOrderList.Name = "dgvOrderList";
+            this.dgvOrderList.ReadOnly = true;
             this.dgvOrderList.Size = new System.Drawing.Size(754, 207);
             this.dgvOrderList.TabIndex = 6;
             // 
@@ -126,30 +129,35 @@
             // 
             this.STT.HeaderText = "STT";
             this.STT.Name = "STT";
+            this.STT.ReadOnly = true;
             this.STT.Width = 40;
             // 
             // hd
             // 
             this.hd.HeaderText = "Số HĐ";
             this.hd.Name = "hd";
+            this.hd.ReadOnly = true;
             this.hd.Width = 200;
             // 
             // order
             // 
             this.order.HeaderText = "Ngày đặt hàng";
             this.order.Name = "order";
+            this.order.ReadOnly = true;
             this.order.Width = 120;
             // 
             // delivery
             // 
             this.delivery.HeaderText = "Ngày giao hàng";
             this.delivery.Name = "delivery";
+            this.delivery.ReadOnly = true;
             this.delivery.Width = 120;
             // 
             // totalMoney
             // 
             this.totalMoney.HeaderText = "Thành tiền";
             this.totalMoney.Name = "totalMoney";
+            this.totalMoney.ReadOnly = true;
             this.totalMoney.Width = 150;
             // 
             // label3

@@ -39,9 +39,9 @@ namespace Lab03_03
                     dgvOrderList.Rows[index].Cells[4].Value = o.Price;
 
                     total += o.Price;
-                    txtTotal.Text = total.ToString();
                 }
             }
+            txtTotal.Text = total.ToString();
         }
         private void UpdateDate()
         {
