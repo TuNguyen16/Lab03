@@ -31,14 +31,33 @@ namespace Lab03_03
                 DateTime idate = o.Invoice.DeliveryDate.Date;
                 if(DateTime.Compare(dtpStart.Value.Date,idate) <= 0 && DateTime.Compare(dtpEnd.Value.Date,idate) >= 0)
                 {
-                    int index = dgvOrderList.Rows.Add();
-                    dgvOrderList.Rows[index].Cells[0].Value = index + 1;
-                    dgvOrderList.Rows[index].Cells[1].Value = o.InvoiceNo;
-                    dgvOrderList.Rows[index].Cells[2].Value = o.Invoice.OrderDate;
-                    dgvOrderList.Rows[index].Cells[3].Value = o.Invoice.DeliveryDate;
-                    dgvOrderList.Rows[index].Cells[4].Value = o.Price;
+                    DataGridViewRow row = null;
+                    foreach (DataGridViewRow i in dgvOrderList.Rows)
+                    {
+                        if (i.Cells[1].Value.ToString().Equals(o.InvoiceNo))
+                        {
+                            row = i;
+                            break;
+                        }
+                    }
 
-                    total += o.Price;
+                    if (row == null)
+                    {
+                        int index = dgvOrderList.Rows.Add();
+                        dgvOrderList.Rows[index].Cells[0].Value = index + 1;
+                        dgvOrderList.Rows[index].Cells[1].Value = o.InvoiceNo;
+                        dgvOrderList.Rows[index].Cells[2].Value = o.Invoice.OrderDate;
+                        dgvOrderList.Rows[index].Cells[3].Value = o.Invoice.DeliveryDate;
+                        dgvOrderList.Rows[index].Cells[4].Value = o.Price * o.Quantity;
+                        total += o.Price * o.Quantity;
+                    }
+                    else
+                    {
+                        decimal temp = Convert.ToDecimal(row.Cells[4].Value);
+                        temp += o.Price * o.Quantity;
+                        row.Cells[4].Value = temp;
+                        total += o.Price * o.Quantity;
+                    }
                 }
             }
             txtTotal.Text = total.ToString();
